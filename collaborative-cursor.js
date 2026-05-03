@@ -157,64 +157,42 @@ class CollaborativeCursor {
             };
 
             this.ws.onclose = () => {
-                console.log('Disconnected from cursor server');
-                // Don't start demo mode for production
+                console.log('Disconnected from cursor server - switching to demo mode');
+                this.startDemoMode();
             };
 
             this.ws.onerror = (error) => {
                 console.error('WebSocket error:', error);
-                console.log('Make sure your WebSocket server is running and the URL is correct');
+                console.log('Server unavailable - switching to demo mode');
+                this.startDemoMode();
             };
 
         } catch (error) {
             console.error('Failed to connect to WebSocket server');
             console.log('For local development, run: npm start');
+            // Start demo mode as fallback for GitHub Pages
+            this.startDemoMode();
         }
     }
 
-    // Connect to WebSocket server
-    connectToServer() {
-        // Try to connect to local server first, fallback to demo mode
-        const serverUrl = 'ws://localhost:8080';
+    startDemoMode() {
+        // Fallback demo mode when server is not available
+        console.log('Server unavailable - running in demo mode with simulated remote users');
 
-        try {
-            this.ws = new WebSocket(serverUrl);
+        // Create fake remote users
+        const fakeUsers = ['remote_user_1', 'remote_user_2', 'remote_user_3'];
 
-            this.ws.onopen = () => {
-                console.log('Connected to collaborative cursor server');
-            };
-
-            this.ws.onmessage = (event) => {
-                try {
-                    const data = JSON.parse(event.data);
-
-                    if (data.type === 'cursor') {
-                        this.receiveRemoteCursor(data.userId, data.position);
-                    } else if (data.type === 'welcome') {
-                        console.log('Server welcome:', data.message);
-                        this.userId = data.userId; // Use server-assigned ID
-                    } else if (data.type === 'user_left') {
-                        this.removeRemoteCursor(data.userId);
-                    }
-                } catch (error) {
-                    console.error('Error parsing WebSocket message:', error);
-                }
-            };
-
-            this.ws.onclose = () => {
-                console.log('Disconnected from cursor server');
-                // Don't start demo mode for production
-            };
-
-            this.ws.onerror = (error) => {
-                console.error('WebSocket error:', error);
-                console.log('Make sure your WebSocket server is running and the URL is correct');
-            };
-
-        } catch (error) {
-            console.error('Failed to connect to WebSocket server');
-            console.log('For local development, run: npm start');
-        }
+        fakeUsers.forEach(userId => {
+            // Simulate random cursor movements
+            setInterval(() => {
+                const position = {
+                    x: Math.random() * window.innerWidth,
+                    y: Math.random() * window.innerHeight,
+                    timestamp: Date.now()
+                };
+                this.receiveRemoteCursor(userId, position);
+            }, 2000 + Math.random() * 3000); // Random interval between 2-5 seconds
+        });
     }
 }
 
