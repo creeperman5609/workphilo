@@ -1,0 +1,224 @@
+// Collaborative Cursor System
+class CollaborativeCursor {
+    constructor() {
+        this.userId = this.generateUserId();
+        this.remoteCursors = new Map();
+        this.throttleDelay = 50; // Send position updates every 50ms
+        this.lastSentTime = 0;
+
+        this.init();
+    }
+
+    generateUserId() {
+        return 'user_' + Math.random().toString(36).substr(2, 9);
+    }
+
+    init() {
+        // Track mouse movement
+        document.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+
+        // Track mouse leaving/entering window
+        document.addEventListener('mouseenter', () => this.showLocalCursor());
+        document.addEventListener('mouseleave', () => this.hideLocalCursor());
+
+        // Connect to WebSocket server
+        this.connectToServer();
+
+        console.log('Collaborative cursor initialized for user:', this.userId);
+    }
+
+    handleMouseMove(e) {
+        const now = Date.now();
+        if (now - this.lastSentTime < this.throttleDelay) return;
+
+        this.lastSentTime = now;
+
+        const position = {
+            x: e.clientX,
+            y: e.clientY,
+            timestamp: now
+        };
+
+        // In a real implementation, send to WebSocket server
+        this.broadcastCursorPosition(position);
+    }
+
+    broadcastCursorPosition(position) {
+        if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+            this.ws.send(JSON.stringify({
+                type: 'cursor',
+                userId: this.userId,
+                position: position
+            }));
+        }
+    }
+
+    receiveRemoteCursor(userId, position) {
+        if (userId === this.userId) return; // Don't show our own cursor
+
+        let cursorElement = this.remoteCursors.get(userId);
+
+        if (!cursorElement) {
+            cursorElement = this.createRemoteCursor(userId);
+            this.remoteCursors.set(userId, cursorElement);
+        }
+
+        // Update cursor position
+        cursorElement.style.left = position.x + 'px';
+        cursorElement.style.top = position.y + 'px';
+        cursorElement.style.display = 'block';
+
+        // Add visual feedback for recent movement
+        cursorElement.classList.add('cursor-active');
+        setTimeout(() => {
+            cursorElement.classList.remove('cursor-active');
+        }, 100);
+
+        // Auto-hide cursor after inactivity
+        clearTimeout(cursorElement.hideTimeout);
+        cursorElement.hideTimeout = setTimeout(() => {
+            cursorElement.style.display = 'none';
+        }, 5000);
+    }
+
+    createRemoteCursor(userId) {
+        const cursor = document.createElement('div');
+        cursor.className = 'remote-cursor';
+        cursor.setAttribute('data-user', userId);
+
+        // Create cursor image
+        const cursorImg = document.createElement('img');
+        cursorImg.src = 'assets/cursor.png';
+        cursorImg.alt = 'Remote cursor';
+        cursorImg.className = 'cursor-image';
+
+        // Create user label
+        const userLabel = document.createElement('div');
+        userLabel.className = 'cursor-label';
+        userLabel.textContent = userId.split('_')[1]; // Show just the ID part
+
+        cursor.appendChild(cursorImg);
+        cursor.appendChild(userLabel);
+
+        document.getElementById('remote-cursors').appendChild(cursor);
+
+        return cursor;
+    }
+
+    showLocalCursor() {
+        // Optional: Add visual feedback for local cursor
+        document.body.style.cursor = 'auto';
+    }
+
+    hideLocalCursor() {
+        // Optional: Hide local cursor when leaving window
+    }
+
+    removeRemoteCursor(userId) {
+        const cursorElement = this.remoteCursors.get(userId);
+        if (cursorElement) {
+            cursorElement.remove();
+            this.remoteCursors.delete(userId);
+            console.log(`Removed cursor for user: ${userId}`);
+        }
+    }
+
+    // Connect to WebSocket server
+    connectToServer() {
+        // For GitHub Pages, you'll need to host the server separately
+        // Replace this URL with your deployed server URL
+        const serverUrl = 'wss://your-server-domain.com'; // Change this!
+
+        // For local development, uncomment this line:
+        // const serverUrl = 'ws://localhost:8080';
+
+        try {
+            this.ws = new WebSocket(serverUrl);
+
+            this.ws.onopen = () => {
+                console.log('Connected to collaborative cursor server');
+            };
+
+            this.ws.onmessage = (event) => {
+                try {
+                    const data = JSON.parse(event.data);
+
+                    if (data.type === 'cursor') {
+                        this.receiveRemoteCursor(data.userId, data.position);
+                    } else if (data.type === 'welcome') {
+                        console.log('Server welcome:', data.message);
+                        this.userId = data.userId; // Use server-assigned ID
+                    } else if (data.type === 'user_left') {
+                        this.removeRemoteCursor(data.userId);
+                    }
+                } catch (error) {
+                    console.error('Error parsing WebSocket message:', error);
+                }
+            };
+
+            this.ws.onclose = () => {
+                console.log('Disconnected from cursor server');
+                // Don't start demo mode for production
+            };
+
+            this.ws.onerror = (error) => {
+                console.error('WebSocket error:', error);
+                console.log('Make sure your WebSocket server is running and the URL is correct');
+            };
+
+        } catch (error) {
+            console.error('Failed to connect to WebSocket server');
+            console.log('For local development, run: npm start');
+        }
+    }
+
+    // Connect to WebSocket server
+    connectToServer() {
+        // Try to connect to local server first, fallback to demo mode
+        const serverUrl = 'ws://localhost:8080';
+
+        try {
+            this.ws = new WebSocket(serverUrl);
+
+            this.ws.onopen = () => {
+                console.log('Connected to collaborative cursor server');
+            };
+
+            this.ws.onmessage = (event) => {
+                try {
+                    const data = JSON.parse(event.data);
+
+                    if (data.type === 'cursor') {
+                        this.receiveRemoteCursor(data.userId, data.position);
+                    } else if (data.type === 'welcome') {
+                        console.log('Server welcome:', data.message);
+                        this.userId = data.userId; // Use server-assigned ID
+                    } else if (data.type === 'user_left') {
+                        this.removeRemoteCursor(data.userId);
+                    }
+                } catch (error) {
+                    console.error('Error parsing WebSocket message:', error);
+                }
+            };
+
+            this.ws.onclose = () => {
+                console.log('Disconnected from cursor server');
+                // Don't start demo mode for production
+            };
+
+            this.ws.onerror = (error) => {
+                console.error('WebSocket error:', error);
+                console.log('Make sure your WebSocket server is running and the URL is correct');
+            };
+
+        } catch (error) {
+            console.error('Failed to connect to WebSocket server');
+            console.log('For local development, run: npm start');
+        }
+    }
+}
+
+// Initialize collaborative cursor when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    window.collaborativeCursor = new CollaborativeCursor();
+});

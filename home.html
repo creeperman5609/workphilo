@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Creeper Man's Mental Asylum</title>
+        <link rel="stylesheet" href="homestyles.css">
+    </head>
+    <body>
+        <nav class="topbar" id="topbar">
+            <div class="topbar-inner">
+                <a class="topbar-button" href="home.html">Home</a>
+                <a class="topbar-button" href="projects.html">Projects</a>
+                <a class="topbar-button" href="contact.html">Contact</a>
+            </div>
+        </nav>
+        
+        <main class="page-content">
+            <div class="text-content">
+                <h1 class="creator">Creeper Man's</h1>
+                <h2 class="creator">Mental Asylum</h2>
+                <p class="box">This was made by a weird lil developer that has absolutely no life, and has spend his time making a website 
+                    about his previous work and interest. As you can see, the creature has a good amount of experience with programming, 3d animation,
+                    voice acting. Along with other random shit
+                </p>
+            </div>
+            <img class="portrait" src="assets/portrat.png" alt="Portrait">
+        </main>
+
+        <!-- Remote cursors container -->
+        <div id="remote-cursors"></div>
+
+        <script>
+            const topbar = document.getElementById('topbar');
+
+            function updateTopbar() {
+                if (window.scrollY === 0) {
+                    topbar.classList.remove('hidden');
+                } else {
+                    topbar.classList.add('hidden');
+                }
+            }
+
+            window.addEventListener('scroll', updateTopbar);
+            window.addEventListener('load', () => {
+                updateTopbar();
+            });
+        </script>
+        <script src="additional-script.js"></script>
+        <script src="collaborative-cursor.js"></script>
+    </body>
+</html>

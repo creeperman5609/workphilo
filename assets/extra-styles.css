@@ -1,0 +1,26 @@
+/* Additional CSS for extra assets and effects */
+/* You can add more styles here */
+
+/* Example: Add a glowing effect to headings */
+.creator {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Example: Add hover effects to the box */
+.box:hover {
+    transform: scale(1.02);
+    transition: transform 0.3s ease;
+}
+
+/* Example: Add custom animations */
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+.box {
+    animation: pulse 2s infinite;
+}
+
+/* Add more custom styles as needed */

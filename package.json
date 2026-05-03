@@ -1,0 +1,16 @@
+{
+  "name": "collaborative-cursor-website",
+  "version": "1.0.0",
+  "description": "A website with collaborative cursor functionality",
+  "main": "cursor-server.js",
+  "scripts": {
+    "start": "node cursor-server.js",
+    "dev": "node cursor-server.js"
+  },
+  "dependencies": {
+    "ws": "^8.14.2"
+  },
+  "keywords": ["websocket", "collaborative", "cursor", "real-time"],
+  "author": "Creeper Man",
+  "license": "MIT"
+}
