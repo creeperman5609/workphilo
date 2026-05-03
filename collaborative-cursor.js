@@ -125,18 +125,17 @@ class CollaborativeCursor {
 
     // Connect to WebSocket server
     connectToServer() {
-        // For GitHub Pages, you'll need to host the server separately
-        // Replace this URL with your deployed server URL
-        const serverUrl = 'wss://your-server-domain.com'; // Change this!
-
-        // For local development, uncomment this line:
-        // const serverUrl = 'ws://localhost:8080';
+        // Get server URL from environment or use Railway domain
+        // After deploying to Railway, update this with your actual URL:
+        // e.g., const serverUrl = 'wss://workphilo-production.up.railway.app';
+        
+        const serverUrl = this.getServerUrl();
 
         try {
             this.ws = new WebSocket(serverUrl);
 
             this.ws.onopen = () => {
-                console.log('Connected to collaborative cursor server');
+                console.log('Connected to collaborative cursor server at:', serverUrl);
             };
 
             this.ws.onmessage = (event) => {
@@ -147,7 +146,7 @@ class CollaborativeCursor {
                         this.receiveRemoteCursor(data.userId, data.position);
                     } else if (data.type === 'welcome') {
                         console.log('Server welcome:', data.message);
-                        this.userId = data.userId; // Use server-assigned ID
+                        this.userId = data.userId;
                     } else if (data.type === 'user_left') {
                         this.removeRemoteCursor(data.userId);
                     }
@@ -170,9 +169,23 @@ class CollaborativeCursor {
         } catch (error) {
             console.error('Failed to connect to WebSocket server');
             console.log('For local development, run: npm start');
-            // Start demo mode as fallback for GitHub Pages
             this.startDemoMode();
         }
+    }
+
+    getServerUrl() {
+        // Production: Use Railway or your deployment URL
+        // Change this to your actual deployed server URL!
+        const railwayUrl = 'wss://workphilo-production.up.railway.app'; // UPDATE THIS!
+        
+        // Development: Use localhost
+        const isDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        
+        if (isDev) {
+            return 'ws://localhost:8080';
+        }
+        
+        return railwayUrl;
     }
 
     startDemoMode() {
