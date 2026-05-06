@@ -1,7 +1,11 @@
+html, body {
+    overflow-x: hidden;
+}
+
 body {
     margin: 0;
     padding: 0;
-    background-color: #424242;
+    background-color: #000000;
     font-family: "Lucida Sans Typewriter", "Lucida Console", monospace;
     color: white;
     /* Static background image */
@@ -27,6 +31,18 @@ body::before {
     animation: scrollBackdrop 20s linear infinite;
     z-index: -1;
     pointer-events: none;
+}
+
+.flesh {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit:fill;
+    z-index: -2;
+    pointer-events: none;
+    opacity: 0.15;
 }
 
 .topbar {
@@ -70,10 +86,12 @@ body::before {
 }
 
 .page-content {
+    position: relative;
+    overflow: hidden;
     padding: 100px 40px 40px;
     width: 100%;
     margin: 0;
-    background-image: url('assets/portbg.png');
+    background-image: url('assets/portbg.png'), linear-gradient(transparent, rgba(0, 0, 0, 0.89));
     background-size: cover;
     background-position: center bottom;
     background-repeat: no-repeat;
@@ -84,6 +102,12 @@ body::before {
     gap: 40px;
 }
 
+.page-content::after {
+    height: 360px;
+    pointer-events: none;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.192));
+}
+
 .text-content {
     flex: 1;
 }
@@ -92,10 +116,38 @@ body::before {
     max-width: 350px;
     width: 100%;
     height: auto;
-    transform: translateX(100%);
-    opacity: 0;
-    animation: slideInFromRight 0.8s ease-out forwards;
-    transition: ease-in-out 0.3s;
+    opacity: 1;
+    position: relative;
+}
+
+.portrait:hover {
+    animation: none; /* Stop intro animation on hover */
+}
+
+.portrait:hover::before,
+.portrait:hover::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('assets/portrat.png');
+    background-size: cover;
+    background-position: center;
+    pointer-events: none;
+}
+
+.portrait:hover::before {
+    background-color: rgba(0, 255, 255, 0.5);
+    mix-blend-mode: screen;
+    animation: reverse-position 0.1s infinite;
+}
+
+.portrait:hover::after {
+    background-color: rgba(255, 0, 0, 0.5);
+    mix-blend-mode: screen;
+    animation: forward-position 0.1s infinite;
 }
 
 .creator {
@@ -132,14 +184,36 @@ body::before {
     }
 }
 
-@keyframes slideInFromRight {
-    from {
+@keyframes portraitIntro {
+    0% {
         transform: translateX(100%);
         opacity: 0;
+        filter: none;
+        clip-path: inset(0 0 0 0);
     }
-    to {
+    25% {
+        transform: translateX(30%) skewX(-2deg);
+        opacity: 0.6;
+        filter: contrast(1.8) saturate(1.4) hue-rotate(12deg) blur(1px);
+        clip-path: inset(8% 0 20% 0);
+    }
+    50% {
+        transform: translateX(12%) skewX(2deg);
+        opacity: 0.85;
+        filter: contrast(1.3) saturate(1.2) hue-rotate(-8deg) blur(0.5px);
+        clip-path: inset(0 12% 8% 0);
+    }
+    75% {
+        transform: translateX(4%) skewX(-1deg);
+        opacity: 0.95;
+        filter: contrast(1.1) saturate(1.1) hue-rotate(2deg) blur(0.2px);
+        clip-path: inset(0 0 0 0);
+    }
+    100% {
         transform: translateX(0);
         opacity: 1;
+        filter: none;
+        clip-path: inset(0 0 0 0);
     }
 }
 
