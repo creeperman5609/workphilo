@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #424242;
+    background-color: #000000;
     font-family: "Lucida Sans Typewriter", "Lucida Console", monospace;
     color: white;
     /* Static background image */
@@ -27,6 +27,14 @@ body::before {
     animation: scrollBackdrop 20s linear infinite;
     z-index: -1;
     pointer-events: none;
+}
+
+.hand {
+    position: absolute;
+    top: 200px;
+    left: -465px;
+    opacity: 1;
+    transition: transform 0.9s ease;
 }
 
 .topbar {
@@ -148,6 +156,145 @@ body::before {
     .portrait {
         max-width: 250px;
         order: -1; /* Move portrait above text on mobile */
+    }
+}
+
+.main-content {
+    position: relative;
+    padding: 120px 0 40px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(320px, 1fr));
+    gap: 24px;
+    padding: 0 40px;
+    box-sizing: border-box;
+    overflow: visible;
+}
+
+@media (max-width: 760px) {
+    .project-grid {
+        grid-template-columns: 1fr;
+        padding: 0 20px;
+    }
+
+    .project-card {
+        min-width: auto;
+    }
+}
+
+.page-header {
+    margin-bottom: 40px;
+}
+
+.page-header h1 {
+    margin: 0 0 10px;
+    font-size: 3rem;
+}
+
+.page-header p {
+    margin: 0;
+    color: #d4d4d4;
+    max-width: 700px;
+    line-height: 1.6;
+}
+
+.project-card {
+    position: relative;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    min-width: 450px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+    transition: transform 0.25s ease, border-color 0.25s ease;
+    opacity: 0;
+    animation-duration: 0.8s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+}
+
+.project-card:nth-child(odd) {
+    transform: translateX(-18px);
+    animation-name: cardFadeInLeft;
+}
+
+.project-card:nth-child(even) {
+    transform: translateX(18px);
+    animation-name: cardFadeInRight;
+}
+
+.project-card:nth-child(odd):hover {
+    transform: translateX(-18px) translateY(-6px);
+    border-color: rgba(62, 226, 29, 0.5);
+}
+
+.project-card:nth-child(even):hover {
+    transform: translateX(18px) translateY(-6px);
+    border-color: rgba(62, 226, 29, 0.5);
+}
+
+.project-card img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+    height: 200px;
+}
+
+.project-info {
+    padding: 24px;
+}
+
+.project-info h2 {
+    margin: 0 0 10px;
+    font-size: 1.6rem;
+}
+
+.project-info p {
+    margin: 0 0 18px;
+    color: #cccccc;
+    line-height: 1.5;
+}
+
+.project-link {
+    display: inline-block;
+    color: rgb(62, 226, 29);
+    text-decoration: none;
+    border: 1px solid rgba(62, 226, 29, 0.8);
+    padding: 10px 16px;
+    border-radius: 999px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.project-link:hover {
+    background-color: rgb(62, 226, 29);
+    color: #0a0a0a;
+}
+
+@keyframes cardFadeInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-120px) scale(0.96);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(-18px) scale(1);
+    }
+}
+
+@keyframes cardFadeInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(120px) scale(0.96);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(18px) scale(1);
     }
 }
 

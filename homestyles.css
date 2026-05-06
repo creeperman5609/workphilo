@@ -89,9 +89,13 @@ body::before {
 }
 
 .portrait {
-    max-width: 300px;
+    max-width: 350px;
     width: 100%;
     height: auto;
+    transform: translateX(100%);
+    opacity: 0;
+    animation: slideInFromRight 0.8s ease-out forwards;
+    transition: ease-in-out 0.3s;
 }
 
 .creator {
@@ -124,6 +128,17 @@ body::before {
     }
     to {
         transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
         opacity: 1;
     }
 }
