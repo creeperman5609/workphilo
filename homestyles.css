@@ -8,25 +8,13 @@ body {
     background-color: #000000;
     font-family: "Lucida Sans Typewriter", "Lucida Console", monospace;
     color: white;
-    /* Static background image */
-    background-image: url('assets/background.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    /* Layer for scrolling backdrop */
-    position: relative;
 }
 
 body::before {
-    content: '';
-    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('assets/backdrop.png');
-    background-size: cover;
-    background-position: center;
     /* Infinite scrolling animation */
     animation: scrollBackdrop 20s linear infinite;
     z-index: -1;
@@ -148,6 +136,31 @@ body::before {
     background-color: rgba(255, 0, 0, 0.5);
     mix-blend-mode: screen;
     animation: forward-position 0.1s infinite;
+}
+
+.promotion {
+    position: absolute;
+    width: 100%;
+    top: 670px;
+    left: 27%;
+    background: rgba(0, 0, 0, 0.7);
+    min-width: 450px;
+    max-width: 600px;
+    border: 7px solid rgba(255, 255, 255, 0.12);
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+    padding-right: 250px;
+    padding-left: 50px;
+}
+
+.vtuber {
+    position: absolute;
+    max-width: 250px;
+    right: 480px;
+    top: 615px;
+    opacity: 1;
+    transition: opacity 0.5s ease;
 }
 
 .creator {
