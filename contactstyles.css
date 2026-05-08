@@ -10,6 +10,18 @@ body {
     color: white;
 }
 
+.grass {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit:fill;
+    z-index: -2;
+    pointer-events: none;
+    opacity: 0.35;
+}
+
 body::before {
     top: 0;
     left: 0;
@@ -226,4 +238,52 @@ body::before {
 @keyframes tvFloat3 {
     0%, 100% { transform: translateX(-20%) translateY(0); }
     50% { transform: translateX(-20%) translateY(-20px); }
+}
+
+.yt-link {
+    position: absolute;
+    top: 30%; /* Adjust as needed to align inside TV */
+    left: 15%;
+    width: 75px;
+    transform: rotate(-20deg);
+    height: auto;
+    display: block;
+    cursor: pointer;
+    z-index: 2; /* above TV */
+    animation: tvFloat1 6s ease-in-out infinite;
+}
+
+.twitter-link {
+    position: absolute;
+    top: 40%; /* Adjust as needed to align inside TV */
+    left: 43%;
+    width: 70px;
+    height: auto;
+    display: block;
+    cursor: pointer;
+    z-index: 2;
+    animation: tvFloat2 8s ease-in-out infinite;
+}
+
+.twitch-link {
+    position: absolute;
+    top: 36%; /* Adjust as needed to align inside TV */
+    left: 85%;
+    max-width: 65px;
+    height: auto;
+    display: block;
+    cursor: pointer;
+    z-index: 2;
+    animation: tvFloat3 10s ease-in-out infinite;
+}
+.tv1::after, .tv2::after, .tv3::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-image: url('assets/static.png'); /* static noise pattern image */
+    background-repeat: repeat;
+    opacity: 0.2; /* adjust for effect strength */
+    pointer-events: none; /* allow clicks to pass through */
+    mix-blend-mode: screen; /* optional for effect blending */
 }
