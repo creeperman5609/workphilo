@@ -9,7 +9,6 @@ body {
     font-family: "Lucida Sans Typewriter", "Lucida Console", monospace;
     color: white;
 }
-
 .grass {
     position: fixed;
     top: 0;
@@ -29,7 +28,7 @@ body::before {
     height: 100%;
     /* Infinite scrolling animation */
     animation: scrollBackdrop 20s linear infinite;
-    z-index: -1;
+    z-index: 1;
     pointer-events: none;
 }
 
@@ -181,6 +180,36 @@ body::before {
     object-fit: contain;
 }
 
+.contact-content {
+    top: 200px;
+    text-align: center;
+    
+    z-index: 1; /* Ensure content is above background */
+}
+
+.contact-content p {
+    position: absolute;
+    left: 30%;
+    font-size: 2.2em;
+    max-width: 600px;
+    margin: 0 auto;
+    top: 700px;
+}
+
+.contact-content h1 {
+    font-family: 'Courier New', Courier, monospace;
+    position: absolute;
+    left: 15%;
+    top: 70px;
+    font-size: 5em;
+    margin-bottom: 0.5em;
+    animation: flicker 3s linear infinite;
+}
+@keyframes flicker {
+    0%, 100% { opacity: 1; }
+    10%, 30%, 50%, 70% { opacity: 0.5; }
+    20%, 40%, 60%, 80% { opacity: 0.8; }
+}
 .cursor-label {
     display: none; /* Hide user labels */
 }
@@ -286,4 +315,29 @@ body::before {
     opacity: 0.2; /* adjust for effect strength */
     pointer-events: none; /* allow clicks to pass through */
     mix-blend-mode: screen; /* optional for effect blending */
+}
+
+
+.scrolling-background {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 200%;
+    height: 200%;
+    background-image: url('assets/static_noise.gif');
+    background-repeat: repeat;
+    background-size: contain;
+    animation: scrollUpLeft 2s linear infinite;
+    z-index: -2;
+    pointer-events: none;
+}
+
+/* Animate background to scroll up and left */
+@keyframes scrollUpLeft {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: -5000px -5000px; /* large value for continuous scrolling */
+    }
 }

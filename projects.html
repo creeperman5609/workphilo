@@ -3,7 +3,19 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Creeper Man's Mental Asylum - Projects</title>
+        <script>
+            const originalTitle = "Creeper Man's Mental Asylum";
+            let scrollIndex = 0;
+
+            function scrollTitle() {
+                const title = originalTitle;
+               const rotatedTitle = title.substring(scrollIndex) + " " + title.substring(0, scrollIndex);
+                document.title = rotatedTitle;
+                scrollIndex = (scrollIndex + 1) % title.length;
+            }
+
+            setInterval(scrollTitle, 30); // change every 300ms
+        </script>
         <link rel="stylesheet" href="projectsstyles.css">
     </head>
     <body>

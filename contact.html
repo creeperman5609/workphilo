@@ -2,10 +2,23 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Creeper Man's Mental Asylum - Contact</title>
+        <script>
+            const originalTitle = "Creeper Man's Mental Asylum";
+            let scrollIndex = 0;
+
+            function scrollTitle() {
+                const title = originalTitle;
+               const rotatedTitle = title.substring(scrollIndex) + " " + title.substring(0, scrollIndex);
+                document.title = rotatedTitle;
+                scrollIndex = (scrollIndex + 1) % title.length;
+            }
+
+            setInterval(scrollTitle, 30); // change every 300ms
+        </script>
         <link rel="stylesheet" href="contactstyles.css">
     </head>
     <body>
+        
         <nav class="topbar" id="topbar">
             <div class="topbar-inner">
                 <a class="topbar-button" href="index.html">Home</a>
@@ -13,13 +26,15 @@
                 <a class="topbar-button" href="contact.html">Contact</a>
             </div>
         </nav>
-
+        <div class="scrolling-background"></div>
         <img class="grass" src="assets/grass.png" alt="Grass">
-
+        
         <main class="contact-content">
             <section class="page-header">
-                <h1>Contact Me</h1>
-                <p>If you want to get in touch with me, you can reach out through the following platforms:</p>
+                <h1>Contact Me ~ Connect With Me</h1>
+                <p>You can see my other work or see me live on the platforms above by clicking on them! <br> 
+                    also you can contact me by emailing me at <a href="mailto:creeperman5609@gmail.com?subject=Saying%20hello%20from%20GF">creeperman5609@gmail.com</a> 
+                </p>
             </section>
 
         <img class="tv1" src="assets/backgrounds/tv1.png" alt="TV 1">
@@ -38,6 +53,6 @@
         <a href="https://www.twitch.tv" target="_blank" class="twitch-link">
         <img class="twitch-link" src="assets/logos/twitch.png" alt="Twitch">
         </a>
-
+        
     </body>
 </html>
