@@ -354,3 +354,11 @@ body::before {
         display: none;
     }
 }
+.bf {
+    position: absolute;
+    top: 1155px;
+    left: 1100px;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 300px;
+}
