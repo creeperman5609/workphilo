@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script>
+            const originalTitle = "Creeper Man's Mental Asylum";
+            let scrollIndex = 0;
+
+            function scrollTitle() {
+                const title = originalTitle;
+               const rotatedTitle = title.substring(scrollIndex) + " " + title.substring(0, scrollIndex);
+                document.title = rotatedTitle;
+                scrollIndex = (scrollIndex + 1) % title.length;
+            }
+        </script>
+        <link rel="stylesheet" href="extrastyles.css">
+</html>
