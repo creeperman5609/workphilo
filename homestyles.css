@@ -139,26 +139,21 @@ body::before {
 }
 
 .promotion {
-    position: absolute;
-    width: 100%;
-    top: 670px;
-    left: 27%;
+    position: relative;
+    width: min(90%, 800px);
+    margin: 40px auto 0;
     background: rgba(0, 0, 0, 0.7);
-    min-width: 450px;
-    max-width: 600px;
     border: 7px solid rgba(255, 255, 255, 0.12);
     border-radius: 5px;
     overflow: hidden;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
-    padding-right: 250px;
-    padding-left: 50px;
+    padding: 40px 50px 40px;
 }
-
 .vtuber {
-    position: absolute;
+    position: relative;
     max-width: 250px;
-    right: 480px;
-    top: 615px;
+    width: min(80vw, 500px);
+    margin: 30px auto 0;
     opacity: 1;
     transition: opacity 0.5s ease;
 }
@@ -166,6 +161,19 @@ body::before {
 .creator {
     color: white;
     text-align: left;
+}
+
+@media (max-width: 768px) {
+    .promotion {
+        margin: 30px auto 0;
+        width: min(95%, 800px);
+        padding: 30px 20px;
+    }
+
+    .vtuber {
+        width: min(70vw, 220px);
+        margin: 30px auto 0;
+    }
 }
 
 .box {
