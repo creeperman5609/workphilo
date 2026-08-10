@@ -38,7 +38,7 @@ body::before {
     object-fit: cover;
     z-index: -2;
     pointer-events: none;
-    opacity: 0.2;
+    opacity: 0.5;
 }
 
 .hand {
@@ -288,6 +288,21 @@ body::before {
     color: #0a0a0a;
 }
 
+.project-linkn {
+    display: inline-block;
+    color: rgb(62, 226, 29);
+    text-decoration: none;
+    border: 1px solid rgba(62, 226, 29, 0.8);
+    padding: 10px 16px;
+    border-radius: 999px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.project-linkn:hover {
+    background-color: rgb(221, 11, 11);
+    color: #ffffff;
+    border-color: rgb(153, 9, 9);
+}
 @keyframes cardFadeInLeft {
     0% {
         opacity: 0;
@@ -348,12 +363,6 @@ body::before {
     100% { transform: scale(1); }
 }
 
-/* Hide cursors on mobile for performance */
-@media (max-width: 768px) {
-    #remote-cursors {
-        display: none;
-    }
-}
 .bf {
     position: absolute;
     top: 1155px;
@@ -361,4 +370,14 @@ body::before {
     transform: translateX(-50%);
     width: 80%;
     max-width: 300px;
+}
+
+/* Hide cursors on mobile for performance */
+@media (max-width: 768px) {
+    #remote-cursors {
+        display: none;
+    }
+    .bf {
+        display: none;
+    }
 }
