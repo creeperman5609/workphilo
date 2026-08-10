@@ -326,11 +326,7 @@ body::before {
     50% { transform: translateX(-20%) translateY(-20px); }
 }
 
-@media (max-width: 768px) {
-    .tv1, .tv2, .tv3 {
-        display: none;
-    }
-}
+
 .yt-link {
     position: absolute;
     top: 30%; /* Adjust as needed to align inside TV */
